@@ -12,19 +12,16 @@
     <h1 class="text-2xl font-medium mb-3">Hello Eva</h1>
     <div class="border rounded p-4">
       <div class="flex gap-2">
-        <div class="flex-shrink flex-grow w-2/3">
-          Get tested today to get some interesting and insightful information.
-        </div>
+        <div class="flex-shrink flex-grow w-2/3">Your results are ready.</div>
         <div class="flex-shrink flex-grow w-1/3">
-          <img src="../assets/take-test.svg" alt="Get tested illustration" />
+          <img
+            src="../assets/result-ready.svg"
+            alt="Result ready illustration"
+          />
         </div>
       </div>
-      <router-link
-        tag="button"
-        class="button w-full mt-4"
-        to="/waiting-for-result"
-      >
-        Get tested
+      <router-link tag="button" class="button w-full mt-4" to="/result">
+        Check my results
       </router-link>
     </div>
     <div class="mt-4">
@@ -49,6 +46,6 @@
 
 <script>
 export default {
-  name: "Home",
+  name: "HomeResultReady",
 };
 </script>
