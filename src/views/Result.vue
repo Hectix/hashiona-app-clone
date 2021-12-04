@@ -1,9 +1,9 @@
 <template>
   <div class="home">
-    <div class="flex justify-between mt-24 mb-3">
+    <div class="flex justify-between mb-5 items-center">
       <h1 class="text-2xl font-medium">Results</h1>
       <div
-        class="bg-blue-400 flex justify-center items-center rounded px-2 text-white mb-6 mt-2"
+        class="bg-blue-400 flex justify-center items-center rounded px-2 text-white mt-0.5"
       >
         {{ today.getDay() }} {{ monthNames[today.getMonth()] }}
         {{ today.getFullYear() }}
@@ -126,34 +126,22 @@ export default {
   },
   mounted() {
     this.loadingResult = true;
-    console.log("Making an API call to fetch the result...");
-    setTimeout(() => {
-      this.result = [
-        {
-          test_name: "Vitamin D, 25-OH, D2",
-          result: 4,
-          optimal_min: 4,
-          optimal_max: 10,
-          units: "ng/mL",
+    fetch(
+      "https://api.test.chino.io/v1/schemas/e981fecd-e947-4b5d-9c73-adedb0cdfe55/documents?full_document=true",
+      {
+        headers: {
+          Authorization:
+            "Basic MzlkNTVkNmUtMTJjYi00N2IyLWE3ZjctYWIxMmFiZWQyMGViOmU0MGY1OWU2LWIxNDMtNDEwOS05MzQzLWM5NzkyN2M0MmVlMw==",
         },
-        {
-          test_name: "Vitamin D, 25-OH, D3",
-          result: 32,
-          optimal_min: 30,
-          optimal_max: 100,
-          units: "ng/mL",
-        },
-        {
-          test_name: "Vitamin D, 25-OH, Total",
-          result: 32,
-          optimal_min: 32,
-          optimal_max: 100,
-          units: "ng/mL",
-        },
-      ];
-      this.loadingResult = false;
-      console.log("Result fetched successfully!");
-    }, 1500);
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        this.result = res.data.documents.map((document) => document.content);
+      })
+      .finally(() => {
+        this.loadingResult = false;
+      });
   },
 };
 </script>

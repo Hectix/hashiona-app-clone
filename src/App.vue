@@ -2,11 +2,11 @@
   <div class="flex justify-center items-center h-screen bg-gray-100">
     <div
       id="app"
-      class="overflow-hidden relative mx-auto rounded shadow-xl bg-white"
+      class="overflow-hidden relative mx-auto rounded shadow-xl bg-white flex flex-col justify-between"
       style="width: 375px; height: 812px; max-height: 100vh"
     >
       <nav
-        class="main-nav absolute top-0 w-full bg-gradient-to-r from-blue-300 to-green-300 mb-8"
+        class="top-0 w-full relative bg-gradient-to-r from-blue-300 to-green-300"
         role="navigation"
         id="main-nav"
       >
@@ -17,11 +17,13 @@
           </router-link>
         </div>
       </nav>
-      <div class="container mx-auto px-4 text-sm font-semibold mb-20 mt-40">
+      <div
+        class="container mx-auto px-4 text-sm font-semibold h-4/5 mt-10 overflow-y-auto"
+      >
         <router-view />
       </div>
       <div
-        class="absolute bottom-0 w-full flex justify-between text-center bg-white border-t text-sm font-semibold cursor-pointer"
+        class="bottom-0 w-full flex justify-between text-center bg-white border-t text-sm font-semibold cursor-pointer"
       >
         <div
           class="p-2 flex-1"
