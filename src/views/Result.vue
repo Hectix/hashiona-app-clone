@@ -5,7 +5,7 @@
       <div
         class="bg-blue-400 flex justify-center items-center rounded px-2 text-white mt-0.5"
       >
-        {{ today.getDay() }} {{ monthNames[today.getMonth()] }}
+        {{ today.getDate() }} {{ monthNames[today.getMonth()] }}
         {{ today.getFullYear() }}
       </div>
     </div>
