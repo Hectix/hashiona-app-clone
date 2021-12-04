@@ -3,9 +3,10 @@
     <div class="flex justify-between mt-24 mb-3">
       <h1 class="text-2xl font-medium">Results</h1>
       <div
-        class="bg-blue-400 flex justify-center items-center rounded px-2 text-white mb-6"
+        class="bg-blue-400 flex justify-center items-center rounded px-2 text-white mb-6 mt-2"
       >
-        12 April 2021
+        {{ today.getDay() }} {{ monthNames[today.getMonth()] }}
+        {{ today.getFullYear() }}
       </div>
     </div>
     <div v-if="!loadingResult">
@@ -18,15 +19,37 @@
           <div class="font-bold text-blue-400">
             {{ test.test_name }}
           </div>
-          <div class="my-3">
-            Your result
-            <div class="text-blue-400 text-lg">
-              {{ test.result }} {{ test.units }}
+          <div
+            class="w-full h-5 mt-10 rounded relative"
+            :style="
+              getResultBarBackgroundGradient(
+                0,
+                test.optimal_max * 2,
+                test.optimal_min,
+                test.optimal_max
+              )
+            "
+          >
+            <div
+              class="absolute bottom-0"
+              :style="{
+                left:
+                  getValuePercentageInRange(
+                    test.result,
+                    0,
+                    test.optimal_max * 2
+                  ) + '%',
+              }"
+            >
+              <div class="font-bold absolute -top-0.5 left-2">
+                {{ test.result }}
+              </div>
+              <div class="h-10 w-1 bg-black mx-auto"></div>
             </div>
           </div>
-          <div>
-            <div>Average peron's range</div>
-            <div class="text-blue-400">{{ test.range }}</div>
+          <div class="flex justify-between mt-1">
+            <span>0 {{ test.units }}</span>
+            <span>{{ test.optimal_max * 2 }} {{ test.units }}</span>
           </div>
         </div>
       </div>
@@ -44,7 +67,6 @@
             <div class="h-3 bg-gray-300 rounded mx-auto"></div>
             <div class="h-3 bg-gray-300 rounded mx-auto"></div>
             <div class="h-3 bg-gray-300 rounded w-4/6 mx-auto"></div>
-            <div class="h-3 bg-gray-300 rounded mx-auto"></div>
           </div>
         </div>
       </div>
@@ -60,7 +82,47 @@ export default {
       testId: "T-NL-1005421",
       loadingResult: false,
       result: [],
+      today: new Date(),
+      monthNames: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ],
     };
+  },
+  methods: {
+    getValuePercentageInRange(value, min, max) {
+      const percentage = ((value - min) / (max - min)) * 100;
+
+      if (percentage <= 0) {
+        return 0;
+      }
+
+      return percentage;
+    },
+    getResultBarBackgroundGradient(min, max, optimumMin, optimumMax) {
+      const yellowStart = this.getValuePercentageInRange(optimumMin, min, max);
+      const yellowEnd = this.getValuePercentageInRange(optimumMax, min, max);
+      return {
+        backgroundImage:
+          "linear-gradient(to right, red, yellow " +
+          yellowStart +
+          "%" +
+          ", lime, yellow " +
+          yellowEnd +
+          "%" +
+          ", red)",
+      };
+    },
   },
   mounted() {
     this.loadingResult = true;
@@ -68,16 +130,25 @@ export default {
     setTimeout(() => {
       this.result = [
         {
-          test_name: "Vitamin D, 25-OH, D3",
-          result: "31",
+          test_name: "Vitamin D, 25-OH, D2",
+          result: 4,
+          optimal_min: 4,
+          optimal_max: 10,
           units: "ng/mL",
-          range: "32-100 ng/ml ( 80-250 nmol/L)",
         },
         {
-          test_name: "Vitamin D, 25-OH, D2",
-          result: "<4",
+          test_name: "Vitamin D, 25-OH, D3",
+          result: 32,
+          optimal_min: 30,
+          optimal_max: 100,
           units: "ng/mL",
-          range: "32-100 ng/ml ( 80-250 nmol/L)",
+        },
+        {
+          test_name: "Vitamin D, 25-OH, Total",
+          result: 32,
+          optimal_min: 32,
+          optimal_max: 100,
+          units: "ng/mL",
         },
       ];
       this.loadingResult = false;

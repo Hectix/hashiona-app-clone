@@ -7,7 +7,7 @@
         width="14px"
         class="mr-1"
       />
-      Today - 12 April 2021
+      Today
     </div>
     <h1 class="text-2xl font-medium mb-3">Hello Eva</h1>
     <div class="border rounded p-4">

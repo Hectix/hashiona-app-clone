@@ -2,7 +2,7 @@
   <div class="flex justify-center items-center h-screen bg-gray-100">
     <div
       id="app"
-      class="overflow-hidden relative mx-auto border rounded shadow-xl bg-white"
+      class="overflow-hidden relative mx-auto rounded shadow-xl bg-white"
       style="width: 375px; height: 812px; max-height: 100vh"
     >
       <nav
